@@ -1,5 +1,7 @@
 const boardContainer = document.querySelector(".boardcontainer");
 const gameState = {
+  playerOne: "Nonsense1",
+  playerTwo: "Nonsense2",
   playerOneMemory: [],
   playerTwoMemory: [],
   winConditions: [
@@ -57,14 +59,14 @@ const occupiedSquareCheck = (event) => {
 };
 
 //Jank Win Checker
-const stringChecker = (player) => {
+const winChecker = (player, playerName) => {
   for (const criterias of gameState.winConditions) {
     for (const condition of criterias) {
       let sCondition = condition.join("");
       let pMemoryString = player.sort().join("");
       console.log(pMemoryString);
       if (pMemoryString.includes(sCondition)) {
-        alert("player wins");
+        alert(playerName + " Wins!");
       }
     }
   }
@@ -73,9 +75,9 @@ const stringChecker = (player) => {
 const playerOneClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
-    param.target.classList.add("playerOneClick");
+    param.target.classList.add("playerOne");
     gameState.playerOneMemory.push(param.target.id);
-    stringChecker(gameState.playerOneMemory);
+    winChecker(gameState.playerOneMemory, gameState.playerOne);
     console.log(gameState.playerOneMemory);
     console.log(gameState.playerTwoMemory);
     console.log("player1running");
@@ -85,9 +87,9 @@ const playerOneClick = (param) => {
 const playerTwoClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
-    param.target.classList.add("playerTwoClick");
+    param.target.classList.add("playerTwo");
     gameState.playerTwoMemory.push(param.target.id);
-    stringChecker(gameState.playerTwoMemory);
+    winChecker(gameState.playerTwoMemory, gameState.playerTwo);
     console.log(gameState.playerTwoMemory);
     console.log("player2running");
   }
