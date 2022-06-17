@@ -1,12 +1,23 @@
 .boardcontainer {
     display: flex;
     flex-wrap: wrap;
-    width: 400px
+    width: 500px
 }
 
 .grid {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background-color: aqua;
     border: 2px solid black;
 }
+
+.playerOneClick {
+    background-image: url("http://clipart-library.com/images_k/x-mark-transparent-background/x-mark-transparent-background-25.png");
+    background-size: cover
+}
+
+.playerTwoClick {
+    background-image: url("https://cdn.pixabay.com/photo/2016/08/25/07/30/orange-1618917_960_720.png");
+    background-size: cover;
+}
+
