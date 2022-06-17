@@ -22,28 +22,6 @@ const gameState = {
     ],
   ],
 };
-// const playerOneMemory = [];
-// const playerTwoMemory = [];
-
-// const winConditions = [
-//   //rows
-//   [
-//     [1, 2, 3],
-//     [4, 5, 6],
-//     [7, 8, 9],
-//   ],
-//   //columns
-//   [
-//     [1, 4, 7],
-//     [2, 5, 8],
-//     [3, 6, 9],
-//   ],
-//   //Diagonals
-//   [
-//     [1, 5, 9],
-//     [3, 5, 7],
-//   ],
-// ];
 
 //Use to check board class assignment working
 const boardStateCheck = () => {
@@ -79,13 +57,13 @@ const occupiedSquareCheck = (event) => {
 };
 
 //Jank Win Checker
-const stringChecker = () => {
+const stringChecker = (player) => {
   for (const criterias of gameState.winConditions) {
     for (const condition of criterias) {
       let sCondition = condition.join("");
-      let pOneString = gameState.playerOneMemory.sort().join("");
-      console.log(pOneString);
-      if (pOneString.includes(sCondition)) {
+      let pMemoryString = player.sort().join("");
+      console.log(pMemoryString);
+      if (pMemoryString.includes(sCondition)) {
         alert("player wins");
       }
     }
@@ -97,7 +75,7 @@ const playerOneClick = (param) => {
   if (param.currentTarget !== clickedChildEle) {
     param.target.classList.add("playerOneClick");
     gameState.playerOneMemory.push(param.target.id);
-    stringChecker();
+    stringChecker(gameState.playerOneMemory);
     console.log(gameState.playerOneMemory);
     console.log(gameState.playerTwoMemory);
     console.log("player1running");
@@ -109,7 +87,7 @@ const playerTwoClick = (param) => {
   if (param.currentTarget !== clickedChildEle) {
     param.target.classList.add("playerTwoClick");
     gameState.playerTwoMemory.push(param.target.id);
-    stringChecker();
+    stringChecker(gameState.playerTwoMemory);
     console.log(gameState.playerTwoMemory);
     console.log("player2running");
   }
