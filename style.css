@@ -1,0 +1,12 @@
+.boardcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px
+}
+
+.grid {
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    border: 2px solid black;
+}
