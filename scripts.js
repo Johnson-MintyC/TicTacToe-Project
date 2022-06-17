@@ -1,7 +1,7 @@
 const boardContainer = document.querySelector(".boardcontainer");
 const gameState = {
-  playerOne: "Nonsense1",
-  playerTwo: "Nonsense2",
+  playerOne: "playerOne",
+  playerTwo: "playerTwo",
   playerOneMemory: [],
   playerTwoMemory: [],
   winConditions: [
@@ -49,13 +49,22 @@ const TurnCheck = (param) => {
 };
 
 //Check if square has one of the classes added and refuse
-const occupiedSquareCheck = (event) => {
+const occupiedSquareCheck = (event, player, whoMemory) => {
   if (
-    !event.target.classList.contains("playerOneClick") ||
-    !event.target.classList.contains("playerTwoClick")
+    !event.target.classList.contains("playerOne") &&
+    !event.target.classList.contains("playerTwo")
   ) {
-    event.target.classList.add("playerOneClick");
+    event.target.classList.add(player);
+    whoMemory(event); //push into memory
   }
+};
+
+const pushIntoPOneMememory = (event) => {
+  gameState.playerOneMemory.push(event.target.id);
+};
+
+const pushIntoPTwoMememory = (event) => {
+  gameState.playerTwoMemory.push(event.target.id);
 };
 
 //Jank Win Checker
@@ -75,23 +84,21 @@ const winChecker = (player, playerName) => {
 const playerOneClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
-    param.target.classList.add("playerOne");
-    gameState.playerOneMemory.push(param.target.id);
+    occupiedSquareCheck(param, gameState.playerOne, pushIntoPOneMememory);
     winChecker(gameState.playerOneMemory, gameState.playerOne);
     console.log(gameState.playerOneMemory);
     console.log(gameState.playerTwoMemory);
-    console.log("player1running");
+    console.log("player1ran");
   }
 };
 
 const playerTwoClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
-    param.target.classList.add("playerTwo");
-    gameState.playerTwoMemory.push(param.target.id);
+    occupiedSquareCheck(param, gameState.playerTwo, pushIntoPTwoMememory);
     winChecker(gameState.playerTwoMemory, gameState.playerTwo);
     console.log(gameState.playerTwoMemory);
-    console.log("player2running");
+    console.log("player2ran");
   }
 };
 
