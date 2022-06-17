@@ -28,17 +28,6 @@ const boardStateCheck = () => {
   return console.log(boardState);
 };
 
-const checkWin = (param) => {
-  for (criterias of winConditions) {
-    for (condition of criterias) {
-      if (condition.every((choice) => param.includes(choice))) {
-        console.log("win");
-      }
-    }
-    console.log(condition);
-  }
-};
-
 const TurnCheck = (param) => {
   if (playerOneMemory.length === 0) {
     playerOneClick(param);
@@ -51,12 +40,28 @@ const TurnCheck = (param) => {
   }
 };
 
+//Jank Win Checker
+const stringChecker = () => {
+  let sString = "";
+  for (const criterias of winConditions) {
+    for (const condition of criterias) {
+      let sCondition = condition.join("");
+      let pOneString = playerOneMemory.sort().join("");
+      console.log(pOneString);
+      if (pOneString.indexOf(sCondition) !== -1) {
+        alert("player wins");
+      }
+    }
+  }
+};
+
 const playerOneClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
     param.target.classList.add("playerOneClick");
     playerOneMemory.push(param.target.id);
     checkWin(playerOneMemory);
+    stringChecker();
     console.log(playerOneMemory);
     console.log(playerTwoMemory);
     console.log("player1running");
@@ -82,10 +87,3 @@ const clickWriteToStorage = (param) => {
 
 // boardContainer.addEventListener("click", clickWriteToStorage);
 boardContainer.addEventListener("click", TurnCheck);
-
-test1 = [1, 2];
-test2 = [3, 4, 1, 2];
-
-for (a in test1) {
-  if (test2.every(a)) console.log("test");
-}
