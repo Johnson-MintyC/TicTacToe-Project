@@ -41,7 +41,7 @@ const playerTwo = {
 
 //Use to check board state class assignment working, Debugging purposes
 const boardStateCheck = () => {
-  const boardState = document.querySelectorAll(".grid");
+  const boardState = arrOfSquares;
   return console.log(boardState);
 };
 
@@ -82,12 +82,13 @@ const pushIntoPTwoMememory = (event) => {
 //increase score by 1
 const increaseScore = () => {};
 
-//Jank Win Checker
+//Check win array is subset of the player superset
 const winChecker = (player) => {
   for (const criterias of gameState.winConditions) {
     for (const condition of criterias) {
       if (condition.every((element) => player.memory.includes(element))) {
         alert(player.name + "win");
+        player.score++;
       }
     }
   }
@@ -122,6 +123,8 @@ const gameReset = () => {
   }
   playerOne.memory = [];
   playerTwo.memory = [];
+  console.log("resert click");
 };
 
+console.log(resetButton);
 resetButton.addEventListener("click", gameReset);

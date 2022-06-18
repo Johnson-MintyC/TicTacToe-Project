@@ -1,6 +1,17 @@
+.upperbody {
+    text-align: center;
+}
+
+.midbody {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 .boardcontainer {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     width: 500px
 }
 
@@ -21,3 +32,11 @@
     background-size: cover;
 }
 
+.player1profile p, .player2profile p {
+    text-align: center;
+}
+
+.lowerbody {
+    display: flex;
+    justify-content: center;
+}
