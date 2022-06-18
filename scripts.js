@@ -124,7 +124,7 @@ const gameReset = () => {
   playerOne.memory = [];
   playerTwo.memory = [];
   console.log("resert click");
+  console.log(playerOne.score, playerTwo.score);
 };
 
-console.log(resetButton);
 resetButton.addEventListener("click", gameReset);
