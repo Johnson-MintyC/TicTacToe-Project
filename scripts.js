@@ -7,20 +7,20 @@ const gameState = {
   winConditions: [
     //rows
     [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9],
+      ["1", "2", "3"],
+      ["4", "5", "6"],
+      ["7", "8", "9"],
     ],
     //columns
     [
-      [1, 4, 7],
-      [2, 5, 8],
-      [3, 6, 9],
+      ["1", "4", "7"],
+      ["2", "5", "8"],
+      ["3", "6", "9"],
     ],
     //Diagonals
     [
-      [1, 5, 9],
-      [3, 5, 7],
+      ["1", "5", "9"],
+      ["3", "5", "7"],
     ],
   ],
 };
@@ -86,18 +86,8 @@ const increaseScore = () => {};
 const winChecker = (player) => {
   for (const criterias of gameState.winConditions) {
     for (const condition of criterias) {
-      let sCondition = condition.join("");
-      let pMemoryString = player.memory
-        .sort((a, z) => {
-          return a - z;
-        })
-        .join("");
-      console.log(pMemoryString);
-      if (player.memory.length === 5) {
-        console.log("Its a Draw");
-        break;
-      } else if (pMemoryString.includes(sCondition)) {
-        alert(player.name + " Wins!");
+      if (condition.every((element) => player.memory.includes(element))) {
+        alert(player.name + "win");
       }
     }
   }
