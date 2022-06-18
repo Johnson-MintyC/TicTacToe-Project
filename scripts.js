@@ -4,12 +4,6 @@ const arrOfSquares = document.querySelectorAll(".grid");
 
 //game state of shared variables
 const gameState = {
-  playerOne: "playerOne",
-  playerTwo: "playerTwo",
-  playerOneScore: 0,
-  playerTwoSCore: 0,
-  playerOneMemory: [],
-  playerTwoMemory: [],
   winConditions: [
     //rows
     [
@@ -35,14 +29,14 @@ const playerOne = {
   name: "placeholderForLater1",
   class: "playerOne",
   score: 0,
-  Memory: [],
+  memory: [],
 };
 
 const playerTwo = {
   name: "placeholderForLater2",
   class: "playerTwo",
   score: 0,
-  Memory: [],
+  memory: [],
 };
 
 //Use to check board state class assignment working, Debugging purposes
@@ -53,15 +47,11 @@ const boardStateCheck = () => {
 
 //Track and check whos turn it is
 const TurnCheck = (param) => {
-  if (gameState.playerOneMemory.length === 0) {
+  if (playerOne.memory.length === 0) {
     playerOneClick(param);
-  } else if (
-    gameState.playerTwoMemory.length < gameState.playerOneMemory.length
-  ) {
+  } else if (playerTwo.memory.length < playerOne.memory.length) {
     playerTwoClick(param);
-  } else if (
-    gameState.playerOneMemory.length < gameState.playerTwoMemory.length
-  ) {
+  } else if (playerOne.memory.length < playerTwo.memory.length) {
     playerOneClick(param);
   } else {
     playerOneClick(param);
@@ -74,36 +64,40 @@ const occupiedSquareCheck = (event, player, whoMemory) => {
     !event.target.classList.contains("playerOne") &&
     !event.target.classList.contains("playerTwo")
   ) {
-    event.target.classList.add(player);
+    event.target.classList.add(player.class);
     whoMemory(event); //push into memory
   }
 };
 
 //Record event id to player 1 memory
 const pushIntoPOneMememory = (event) => {
-  gameState.playerOneMemory.push(event.target.id);
+  playerOne.memory.push(event.target.id);
 };
 
 //Record event id to player 2 memory
 const pushIntoPTwoMememory = (event) => {
-  gameState.playerTwoMemory.push(event.target.id);
+  playerTwo.memory.push(event.target.id);
 };
 
+//increase score by 1
 const increaseScore = () => {};
 
 //Jank Win Checker
-const winChecker = (player, playerName) => {
+const winChecker = (player) => {
   for (const criterias of gameState.winConditions) {
     for (const condition of criterias) {
       let sCondition = condition.join("");
-      let pMemoryString = player
+      let pMemoryString = player.memory
         .sort((a, z) => {
           return a - z;
         })
         .join("");
       console.log(pMemoryString);
-      if (pMemoryString.includes(sCondition)) {
-        alert(playerName + " Wins!");
+      if (player.memory.length === 5) {
+        console.log("Its a Draw");
+        break;
+      } else if (pMemoryString.includes(sCondition)) {
+        alert(player.name + " Wins!");
       }
     }
   }
@@ -113,8 +107,8 @@ const winChecker = (player, playerName) => {
 const playerOneClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
-    occupiedSquareCheck(param, gameState.playerOne, pushIntoPOneMememory);
-    winChecker(gameState.playerOneMemory, gameState.playerOne);
+    occupiedSquareCheck(param, playerOne, pushIntoPOneMememory);
+    winChecker(playerOne);
     console.log("player1ran");
   }
 };
@@ -123,8 +117,8 @@ const playerOneClick = (param) => {
 const playerTwoClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
-    occupiedSquareCheck(param, gameState.playerTwo, pushIntoPTwoMememory);
-    winChecker(gameState.playerTwoMemory, gameState.playerTwo);
+    occupiedSquareCheck(param, playerTwo, pushIntoPTwoMememory);
+    winChecker(playerTwo);
     console.log("player2ran");
   }
 };
@@ -136,8 +130,8 @@ const gameReset = () => {
     grid.classList.remove("playerOne");
     grid.classList.remove("playerTwo");
   }
-  gameState.playerOneMemory = [];
-  gameState.playerTwoMemory = [];
+  playerOne.memory = [];
+  playerTwo.memory = [];
 };
 
 resetButton.addEventListener("click", gameReset);
