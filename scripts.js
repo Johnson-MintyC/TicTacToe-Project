@@ -1,7 +1,13 @@
 const boardContainer = document.querySelector(".boardcontainer");
+const resetButton = document.querySelector(".resetButton");
+const arrOfSquares = document.querySelectorAll(".grid");
+
+//game state of shared variables
 const gameState = {
   playerOne: "playerOne",
   playerTwo: "playerTwo",
+  playerOneScore: 0,
+  playerTwoSCore: 0,
   playerOneMemory: [],
   playerTwoMemory: [],
   winConditions: [
@@ -25,7 +31,7 @@ const gameState = {
   ],
 };
 
-//Use to check board class assignment working
+//Use to check board state class assignment working, Debugging purposes
 const boardStateCheck = () => {
   const boardState = document.querySelectorAll(".grid");
   return console.log(boardState);
@@ -59,20 +65,28 @@ const occupiedSquareCheck = (event, player, whoMemory) => {
   }
 };
 
+//Record event id to player 1 memory
 const pushIntoPOneMememory = (event) => {
   gameState.playerOneMemory.push(event.target.id);
 };
 
+//Record event id to player 2 memory
 const pushIntoPTwoMememory = (event) => {
   gameState.playerTwoMemory.push(event.target.id);
 };
+
+const increaseScore = () => {};
 
 //Jank Win Checker
 const winChecker = (player, playerName) => {
   for (const criterias of gameState.winConditions) {
     for (const condition of criterias) {
       let sCondition = condition.join("");
-      let pMemoryString = player.sort().join("");
+      let pMemoryString = player
+        .sort((a, z) => {
+          return a - z;
+        })
+        .join("");
       console.log(pMemoryString);
       if (pMemoryString.includes(sCondition)) {
         alert(playerName + " Wins!");
@@ -81,26 +95,35 @@ const winChecker = (player, playerName) => {
   }
 };
 
+//player 1 actions, and board state checks
 const playerOneClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
     occupiedSquareCheck(param, gameState.playerOne, pushIntoPOneMememory);
     winChecker(gameState.playerOneMemory, gameState.playerOne);
-    console.log(gameState.playerOneMemory);
-    console.log(gameState.playerTwoMemory);
     console.log("player1ran");
   }
 };
 
+//player 2 actions, and board state checks
 const playerTwoClick = (param) => {
   const clickedChildEle = param.target;
   if (param.currentTarget !== clickedChildEle) {
     occupiedSquareCheck(param, gameState.playerTwo, pushIntoPTwoMememory);
     winChecker(gameState.playerTwoMemory, gameState.playerTwo);
-    console.log(gameState.playerTwoMemory);
     console.log("player2ran");
   }
 };
 
-// boardContainer.addEventListener("click", clickWriteToStorage);
 boardContainer.addEventListener("click", TurnCheck);
+
+const gameReset = () => {
+  for (grid of arrOfSquares) {
+    grid.classList.remove("playerOne");
+    grid.classList.remove("playerTwo");
+  }
+  gameState.playerOneMemory = [];
+  gameState.playerTwoMemory = [];
+};
+
+resetButton.addEventListener("click", gameReset);
