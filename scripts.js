@@ -17,6 +17,7 @@ const gameState = {
     ["3", "5", "7"],
   ],
   roundOver: false,
+  roundNotice: document.querySelector(".turnNotice"),
   resetButton: document.querySelector(".resetButton"),
 };
 
@@ -67,6 +68,26 @@ const TurnCheck = (param) => {
   }
 };
 
+//Update turn notice
+const TurnUpdateNotice = () => {
+  if (
+    playerOne.memory.length === 5 &&
+    playerTwo.memory.length === 4 &&
+    gameState.roundOver === false
+  ) {
+    gameState.roundNotice.innerText = "Its a Draw";
+  } else if (gameState.roundOver !== true) {
+    if (playerOne.memory.length === 0) {
+      gameState.roundNotice.innerText = playerOne.name + " Starts";
+    } else if (playerTwo.memory.length < playerOne.memory.length) {
+      gameState.roundNotice.innerText = "It's " + playerTwo.name + " Turn";
+    } else if (playerOne.memory.length < playerTwo.memory.length) {
+      gameState.roundNotice.innerText = "It's " + playerOne.name + " Turn";
+    } else {
+      gameState.roundNotice.innerText = "It's " + playerOne.name + " Turn";
+    }
+  }
+};
 // Check if square has one of the classes added and refuse
 const occupiedSquareCheck = (event, player, whoMemory) => {
   if (
@@ -98,7 +119,7 @@ const increaseScore = (player) => {
 const winChecker = (player) => {
   for (const criterias of gameState.winConditions) {
     if (criterias.every((element) => player.memory.includes(element))) {
-      alert(player.name + " Wins!");
+      gameState.roundNotice.innerText = player.name + " Wins!";
       increaseScore(player);
       gameState.roundOver = true;
       console.log(gameState.roundOver);
@@ -110,7 +131,7 @@ const winChecker = (player) => {
     playerTwo.memory.length === 4 &&
     gameState.roundOver === false
   ) {
-    alert("Its a Draw");
+    gameState.roundNotice.innerText = "Its a Draw";
   }
 };
 
@@ -135,6 +156,7 @@ const playerTwoClick = (param) => {
 };
 
 boardContainer.addEventListener("click", TurnCheck);
+boardContainer.addEventListener("click", TurnUpdateNotice);
 
 //Reset the board state
 const gameReset = () => {
@@ -145,6 +167,7 @@ const gameReset = () => {
   playerOne.memory = [];
   playerTwo.memory = [];
   gameState.roundOver = false;
+  gameState.roundNotice.innerText = playerOne.name + " Starts";
   console.log("reset click");
   console.log(playerOne.score, playerTwo.score);
 };
@@ -186,6 +209,8 @@ playerOne.HTMLpic.addEventListener("click", () => {
 playerOne.HTMLChangePicButton.addEventListener("click", () => {
   changePlayerPic(playerOne);
 });
+playerOne.HTMLpic.addEventListener("click", TurnUpdateNotice);
+playerOne.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
 
 //Listener to change Pic for P2
 playerTwo.HTMLpic.addEventListener("click", () => {
@@ -194,3 +219,12 @@ playerTwo.HTMLpic.addEventListener("click", () => {
 playerTwo.HTMLChangePicButton.addEventListener("click", () => {
   changePlayerPic(playerTwo);
 });
+playerTwo.HTMLpic.addEventListener("click", TurnUpdateNotice);
+playerTwo.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
+
+// AI move generator
+const randomMove = () => {
+  const move = Math.floor(Math.random() * 9);
+  console.log(move);
+  return move;
+};
