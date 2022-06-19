@@ -21,7 +21,7 @@ const gameState = {
 };
 
 const playerOne = {
-  name: "placeholderForLater1",
+  name: "Player 1",
   class: "playerOne",
   score: 0,
   memory: [],
@@ -29,16 +29,20 @@ const playerOne = {
   HTMLName: document.querySelector("#p1Handle"),
   HTMLChangeNameButton: document.querySelector("#p1NameChange"),
   HTMLpic: document.querySelector("#p1pic"),
+  HTMLChangePicButton: document.querySelector("#p1PicChange"),
 };
+console.log(playerOne.HTMLpic.src);
 
 const playerTwo = {
-  name: "placeholderForLater2",
+  name: "Player 2",
   class: "playerTwo",
   score: 0,
   memory: [],
   HTMLScoreBoard: document.querySelector("#p2Scoreboard"),
   HTMLName: document.querySelector("#p2Handle"),
   HTMLChangeNameButton: document.querySelector("#p2NameChange"),
+  HTMLpic: document.querySelector("#p2pic"),
+  HTMLChangePicButton: document.querySelector("#p2PicChange"),
 };
 
 //Use to check board state class assignment working, Debugging purposes
@@ -140,7 +144,7 @@ const gameReset = () => {
   playerOne.memory = [];
   playerTwo.memory = [];
   gameState.roundOver = false;
-  console.log("resert click");
+  console.log("reset click");
   console.log(playerOne.score, playerTwo.score);
 };
 
@@ -170,4 +174,22 @@ playerOne.HTMLChangeNameButton.addEventListener("click", changePlayerOneName);
 //Listener to change Name for P2
 playerTwo.HTMLChangeNameButton.addEventListener("click", changePlayerTwoName);
 
-console.log(playerOne.HTMLpic.src);
+const changePlayerOnePic = () => {
+  const playerInput = prompt("Enter Image URL: ");
+  if (playerInput) {
+    playerOne.HTMLpic.src = playerInput;
+  }
+};
+
+const changePlayerTwoPic = () => {
+  const playerInput = prompt("Enter Image URL: ");
+  if (playerInput) {
+    playerTwo.HTMLpic.src = playerInput;
+  }
+};
+
+playerOne.HTMLpic.addEventListener("click", changePlayerOnePic);
+playerOne.HTMLChangePicButton.addEventListener("click", changePlayerOnePic);
+
+playerTwo.HTMLpic.addEventListener("click", changePlayerTwoPic);
+playerTwo.HTMLChangePicButton.addEventListener("click", changePlayerTwoPic);
