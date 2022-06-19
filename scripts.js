@@ -20,6 +20,7 @@ const gameState = {
   resetButton: document.querySelector(".resetButton"),
 };
 
+//Player 1 Object, for data tracking and allow function reuse
 const playerOne = {
   name: "Player 1",
   class: "playerOne",
@@ -31,8 +32,8 @@ const playerOne = {
   HTMLpic: document.querySelector("#p1pic"),
   HTMLChangePicButton: document.querySelector("#p1PicChange"),
 };
-console.log(playerOne.HTMLpic.src);
 
+//Player 2 Object, for data tracking and allow function reuse
 const playerTwo = {
   name: "Player 2",
   class: "playerTwo",
@@ -148,48 +149,48 @@ const gameReset = () => {
   console.log(playerOne.score, playerTwo.score);
 };
 
-//change name of Player 1 HTML Profile
-const changePlayerOneName = () => {
-  const playerInput = prompt("Enter name: ");
-  if (playerInput) {
-    playerOne.name = playerInput;
-    playerOne.HTMLName.innerText = playerInput;
-  }
-};
-
-//change name of Player 2 HTML Profile
-const changePlayerTwoName = () => {
-  const playerInput = prompt("Enter name: ");
-  if (playerInput) {
-    playerTwo.name = playerInput;
-    playerTwo.HTMLName.innerText = playerInput;
-  }
-};
-
+//Listener for game reset button
 gameState.resetButton.addEventListener("click", gameReset);
 
+//Change Name after valid input
+const changePlayerName = (player) => {
+  const playerInput = prompt("Enter name: ");
+  if (playerInput) {
+    player.name = playerInput;
+    player.HTMLName.innerText = playerInput;
+  }
+};
+
 //Listener to change Name for P1
-playerOne.HTMLChangeNameButton.addEventListener("click", changePlayerOneName);
+playerOne.HTMLChangeNameButton.addEventListener("click", () => {
+  changePlayerName(playerOne);
+});
 
 //Listener to change Name for P2
-playerTwo.HTMLChangeNameButton.addEventListener("click", changePlayerTwoName);
+playerTwo.HTMLChangeNameButton.addEventListener("click", () => {
+  changePlayerName(playerTwo);
+});
 
-const changePlayerOnePic = () => {
+//change player profile pic
+const changePlayerPic = (player) => {
   const playerInput = prompt("Enter Image URL: ");
   if (playerInput) {
-    playerOne.HTMLpic.src = playerInput;
+    player.HTMLpic.src = playerInput;
   }
 };
 
-const changePlayerTwoPic = () => {
-  const playerInput = prompt("Enter Image URL: ");
-  if (playerInput) {
-    playerTwo.HTMLpic.src = playerInput;
-  }
-};
+//Listener to change Pic for P1
+playerOne.HTMLpic.addEventListener("click", () => {
+  changePlayerPic(playerOne);
+});
+playerOne.HTMLChangePicButton.addEventListener("click", () => {
+  changePlayerPic(playerOne);
+});
 
-playerOne.HTMLpic.addEventListener("click", changePlayerOnePic);
-playerOne.HTMLChangePicButton.addEventListener("click", changePlayerOnePic);
-
-playerTwo.HTMLpic.addEventListener("click", changePlayerTwoPic);
-playerTwo.HTMLChangePicButton.addEventListener("click", changePlayerTwoPic);
+//Listener to change Pic for P2
+playerTwo.HTMLpic.addEventListener("click", () => {
+  changePlayerPic(playerTwo);
+});
+playerTwo.HTMLChangePicButton.addEventListener("click", () => {
+  changePlayerPic(playerTwo);
+});
