@@ -147,15 +147,19 @@ const gameReset = () => {
 //change name of Player 1 HTML Profile
 const changePlayerOneName = () => {
   const playerInput = prompt("Enter name: ");
-  playerOne.name = playerInput;
-  playerOne.HTMLName.innerText = playerInput;
+  if (playerInput) {
+    playerOne.name = playerInput;
+    playerOne.HTMLName.innerText = playerInput;
+  }
 };
 
 //change name of Player 2 HTML Profile
 const changePlayerTwoName = () => {
   const playerInput = prompt("Enter name: ");
-  playerTwo.name = playerInput;
-  playerTwo.HTMLName.innerText = playerInput;
+  if (playerInput) {
+    playerTwo.name = playerInput;
+    playerTwo.HTMLName.innerText = playerInput;
+  }
 };
 
 gameState.resetButton.addEventListener("click", gameReset);
