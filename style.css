@@ -1,5 +1,20 @@
+@font-face {
+    font-family: "odachi";
+    src: url(./Webfont/Odachi.woff);
+}
+
+@font-face {
+    font-family: "haymaker";
+    src: url(./Webfont/Haymaker.woff);
+}
+
 .upperbody {
     text-align: center;
+}
+
+.heading {
+    font-family: "odachi";
+    font-size: 60px;
 }
 
 .midbody {
@@ -35,6 +50,7 @@
 
 .player1profile, .player2profile{
     text-align: center;
+    font-family: "haymaker";
 
 }
 
