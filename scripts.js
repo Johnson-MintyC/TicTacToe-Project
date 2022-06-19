@@ -1,5 +1,4 @@
 const boardContainer = document.querySelector(".boardcontainer");
-const resetButton = document.querySelector(".resetButton");
 const arrOfSquares = document.querySelectorAll(".grid");
 
 //game state of shared variables
@@ -24,6 +23,7 @@ const gameState = {
     ],
   ],
   roundOver: false,
+  resetButton: document.querySelector(".resetButton"),
 };
 
 const playerOne = {
@@ -32,6 +32,7 @@ const playerOne = {
   score: 0,
   memory: [],
   HTMLScoreBoard: document.querySelector("#p1Scoreboard"),
+  HTMLName: document.querySelector("p1Handle"),
 };
 
 const playerTwo = {
@@ -40,6 +41,7 @@ const playerTwo = {
   score: 0,
   memory: [],
   HTMLScoreBoard: document.querySelector("#p2Scoreboard"),
+  HTMLName: document.querySelector("p2Handle"),
 };
 
 //Use to check board state class assignment working, Debugging purposes
@@ -92,19 +94,18 @@ const increaseScore = (player) => {
 
 //Check win array is subset of the player superset
 const winChecker = (player) => {
-  for (const criterias of gameState.winConditions) {
-    for (const condition of criterias) {
-      if (playerOne.memory.length === 5 && playerTwo.memory.length === 4) {
-        alert("It's a Draw");
-        player.memory.push("Void Token");
-      } else if (
-        condition.every((element) => player.memory.includes(element))
-      ) {
-        alert(player.name + "win");
-        increaseScore(player);
-        gameState.roundOver = true;
-        console.log(gameState.roundOver);
-        // test.TextContent = "Score: " + player.score;
+  if (playerOne.memory.length === 5 && playerTwo.memory.length === 4) {
+    alert("It's a Draw");
+  } else {
+    for (const criterias of gameState.winConditions) {
+      for (const condition of criterias) {
+        if (condition.every((element) => player.memory.includes(element))) {
+          alert(player.name + "win");
+          increaseScore(player);
+          gameState.roundOver = true;
+          console.log(gameState.roundOver);
+          // test.TextContent = "Score: " + player.score;
+        }
       }
     }
   }
@@ -132,6 +133,7 @@ const playerTwoClick = (param) => {
 
 boardContainer.addEventListener("click", TurnCheck);
 
+//Reset the board state
 const gameReset = () => {
   for (grid of arrOfSquares) {
     grid.classList.remove("playerOne");
@@ -143,4 +145,7 @@ const gameReset = () => {
   console.log(playerOne.score, playerTwo.score);
 };
 
-resetButton.addEventListener("click", gameReset);
+//change name of Player 1 Profile
+const changeName = (player) => {};
+
+gameState.resetButton.addEventListener("click", gameReset);

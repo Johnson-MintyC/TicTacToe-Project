@@ -8,14 +8,18 @@
     src: url(./Webfont/Haymaker.woff);
 }
 
+/* Top Section */
+
 .upperbody {
     text-align: center;
 }
 
 .heading {
     font-family: "odachi";
-    font-size: 60px;
+    font-size: 70px;
 }
+
+/* Mid Section */
 
 .midbody {
     display: flex;
@@ -38,6 +42,8 @@
     border: 2px solid black;
 }
 
+/* Player Details */
+
 .playerOne {
     background-image: url("http://clipart-library.com/images_k/x-mark-transparent-background/x-mark-transparent-background-25.png");
     background-size: cover
@@ -58,11 +64,13 @@
     max-width: 300px
 }
 
+#p1Scoreboard, #p2Scoreboard {
+    font-size: 30px;
+}
+
+/* Bottom of Page */
+
 .lowerbody {
     display: flex;
     justify-content: center;
-}
-
-#p1Scoreboard, #p2Scoreboard {
-    font-size: 50px;
 }
