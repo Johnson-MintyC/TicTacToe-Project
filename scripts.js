@@ -23,6 +23,7 @@ const gameState = {
       ["3", "5", "7"],
     ],
   ],
+  roundOver: false,
 };
 
 const playerOne = {
@@ -49,14 +50,16 @@ const boardStateCheck = () => {
 
 //Track and check whos turn it is
 const TurnCheck = (param) => {
-  if (playerOne.memory.length === 0) {
-    playerOneClick(param);
-  } else if (playerTwo.memory.length < playerOne.memory.length) {
-    playerTwoClick(param);
-  } else if (playerOne.memory.length < playerTwo.memory.length) {
-    playerOneClick(param);
-  } else {
-    playerOneClick(param);
+  if (gameState.roundOver !== true) {
+    if (playerOne.memory.length === 0) {
+      playerOneClick(param);
+    } else if (playerTwo.memory.length < playerOne.memory.length) {
+      playerTwoClick(param);
+    } else if (playerOne.memory.length < playerTwo.memory.length) {
+      playerOneClick(param);
+    } else {
+      playerOneClick(param);
+    }
   }
 };
 
@@ -93,12 +96,14 @@ const winChecker = (player) => {
     for (const condition of criterias) {
       if (playerOne.memory.length === 5 && playerTwo.memory.length === 4) {
         alert("It's a Draw");
-        playerOne.memory.push("Void Token");
+        player.memory.push("Void Token");
       } else if (
         condition.every((element) => player.memory.includes(element))
       ) {
         alert(player.name + "win");
         increaseScore(player);
+        gameState.roundOver = true;
+        console.log(gameState.roundOver);
         // test.TextContent = "Score: " + player.score;
       }
     }
