@@ -30,6 +30,7 @@ const playerOne = {
   class: "playerOne",
   score: 0,
   memory: [],
+  HTMLScoreBoard: document.querySelector("#p1Scoreboard"),
 };
 
 const playerTwo = {
@@ -37,6 +38,7 @@ const playerTwo = {
   class: "playerTwo",
   score: 0,
   memory: [],
+  HTMLScoreBoard: document.querySelector("#p2Scoreboard"),
 };
 
 //Use to check board state class assignment working, Debugging purposes
@@ -79,16 +81,25 @@ const pushIntoPTwoMememory = (event) => {
   playerTwo.memory.push(event.target.id);
 };
 
-//increase score by 1
-const increaseScore = () => {};
+//increase score by 1, and update the HTML to reflect
+const increaseScore = (player) => {
+  player.score++;
+  player.HTMLScoreBoard.innerText = "Score: " + player.score;
+};
 
 //Check win array is subset of the player superset
 const winChecker = (player) => {
   for (const criterias of gameState.winConditions) {
     for (const condition of criterias) {
-      if (condition.every((element) => player.memory.includes(element))) {
+      if (playerOne.memory.length === 5 && playerTwo.memory.length === 4) {
+        alert("It's a Draw");
+        playerOne.memory.push("Void Token");
+      } else if (
+        condition.every((element) => player.memory.includes(element))
+      ) {
         alert(player.name + "win");
-        player.score++;
+        increaseScore(player);
+        // test.TextContent = "Score: " + player.score;
       }
     }
   }
