@@ -7,6 +7,13 @@
     font-family: "haymaker";
     src: url(./Webfont/Haymaker.woff);
 }
+/* Full Page */
+
+body {
+    background-image: url("./Assets/seamless-gold-rhombus-grid-pattern-black-background_53876-97589.webp");
+    background-size: cover;
+    background-attachment: fixed;
+}
 
 /* Top Section */
 
@@ -17,6 +24,7 @@
 .heading {
     font-family: "odachi";
     font-size: 70px;
+    color: antiquewhite;
 }
 
 /* Mid Section */
@@ -38,25 +46,32 @@
 .grid {
     width: 150px;
     height: 150px;
-    background-color: none;
     border: 2px solid black;
+}
+
+.grid:hover {
+    width: 150px;
+    height: 150px;
+    background-color: #f5deb8;
+    opacity: 0.3;
 }
 
 /* Player Details */
 
 .playerOne {
-    background-image: url("http://clipart-library.com/images_k/x-mark-transparent-background/x-mark-transparent-background-25.png");
+    background-image: url("./Assets/x-mark-transparent-background-25.png");
     background-size: cover
 }
 
 .playerTwo {
-    background-image: url("https://cdn.pixabay.com/photo/2016/08/25/07/30/orange-1618917_960_720.png");
+    background-image: url("./Assets/orange-1618917_960_720.webp");
     background-size: cover;
 }
 
 .player1profile, .player2profile, .turnNotice{
     text-align: center;
     font-family: "haymaker";
+    color: antiquewhite;
 
 }
 
