@@ -264,6 +264,7 @@ const AiLogic = () => {
         extract.classList.add("playerTwo");
       }
       winChecker(playerTwo);
+      TurnUpdateNotice();
     }
   }
 };
