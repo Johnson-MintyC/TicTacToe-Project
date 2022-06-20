@@ -249,7 +249,7 @@ const AiToggle = () => {
   }
 };
 
-//Ai Turn logic
+//Ai Turn logic, pick randomly from array of unoccupied squares
 const AiLogic = () => {
   if (playerTwo.ai === true) {
     if (gameState.roundOver !== true) {
@@ -268,8 +268,7 @@ const AiLogic = () => {
   }
 };
 
-// console.log(String(randomMove()));
-
+//Return array of squares with no P1 or P2 class, therefore unoccupied
 const unoccupiedListforAi = () => {
   const result = [];
   for (square of arrOfSquares) {
@@ -286,18 +285,21 @@ const unoccupiedListforAi = () => {
   gameState.unoccupiedSquares = result;
 };
 
+//Listeners to switch AI on, and run once AI is true
 gameState.aiButton.addEventListener("click", AiToggle);
 boardContainer.addEventListener("click", unoccupiedListforAi);
 boardContainer.addEventListener("click", AiLogic);
 
+//Mouse over function to add text to empty divs
 const mouseOver = (event) => {
   event.target.textContent = gameState.currentPlayer;
 };
 
+//Remove the text on mouse exit
 const mouseOut = (event) => {
   event.target.textContent = "";
 };
 
+//Listener for for mouse on and exit
 boardContainer.addEventListener("mouseover", mouseOver);
-
 boardContainer.addEventListener("mouseout", mouseOut);
