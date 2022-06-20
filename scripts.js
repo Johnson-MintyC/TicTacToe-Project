@@ -1,28 +1,6 @@
 const boardContainer = document.querySelector(".boardcontainer");
 const arrOfSquares = document.querySelectorAll(".grid");
 
-//game state of shared variables
-const gameState = {
-  winConditions: [
-    //rows
-    ["sq1", "sq2", "sq3"],
-    ["sq4", "sq5", "sq6"],
-    ["sq7", "sq8", "sq9"],
-    //columns
-    ["sq1", "sq4", "sq7"],
-    ["sq2", "sq5", "sq8"],
-    ["sq3", "sq6", "sq9"],
-    //Diagonals
-    ["sq1", "sq5", "sq9"],
-    ["sq3", "sq5", "sq7"],
-  ],
-  roundOver: false,
-  roundNotice: document.querySelector(".turnNotice"),
-  resetButton: document.querySelector(".resetButton"),
-  unoccupiedSquares: [],
-  aiButton: document.querySelector(".aiToggle"),
-};
-
 //Player 1 Object, for data tracking and allow function reuse
 const playerOne = {
   name: "Player 1",
@@ -48,6 +26,29 @@ const playerTwo = {
   HTMLChangeNameButton: document.querySelector("#p2NameChange"),
   HTMLpic: document.querySelector("#p2pic"),
   HTMLChangePicButton: document.querySelector("#p2PicChange"),
+};
+
+//game state of shared variables
+const gameState = {
+  winConditions: [
+    //rows
+    ["sq1", "sq2", "sq3"],
+    ["sq4", "sq5", "sq6"],
+    ["sq7", "sq8", "sq9"],
+    //columns
+    ["sq1", "sq4", "sq7"],
+    ["sq2", "sq5", "sq8"],
+    ["sq3", "sq6", "sq9"],
+    //Diagonals
+    ["sq1", "sq5", "sq9"],
+    ["sq3", "sq5", "sq7"],
+  ],
+  roundOver: false,
+  currentPlayer: playerOne.name,
+  roundNotice: document.querySelector(".turnNotice"),
+  resetButton: document.querySelector(".resetButton"),
+  unoccupiedSquares: [],
+  aiButton: document.querySelector(".aiToggle"),
 };
 
 //Use to check board state class assignment working, Debugging purposes
@@ -82,12 +83,16 @@ const TurnUpdateNotice = () => {
   } else if (gameState.roundOver !== true) {
     if (playerOne.memory.length === 0) {
       gameState.roundNotice.innerText = playerOne.name + " Starts";
+      gameState.currentPlayer = playerOne.name;
     } else if (playerTwo.memory.length < playerOne.memory.length) {
       gameState.roundNotice.innerText = "It's " + playerTwo.name + " Turn";
+      gameState.currentPlayer = playerTwo.name;
     } else if (playerOne.memory.length < playerTwo.memory.length) {
       gameState.roundNotice.innerText = "It's " + playerOne.name + " Turn";
+      gameState.currentPlayer = playerOne.name;
     } else {
       gameState.roundNotice.innerText = "It's " + playerOne.name + " Turn";
+      gameState.currentPlayer = playerOne.name;
     }
   }
 };
@@ -125,8 +130,6 @@ const winChecker = (player) => {
       gameState.roundNotice.innerText = player.name + " Wins!";
       increaseScore(player);
       gameState.roundOver = true;
-      console.log(gameState.roundOver);
-      // test.TextContent = "Score: " + player.score;
     }
   }
   if (
@@ -144,7 +147,6 @@ const playerOneClick = (param) => {
   if (param.currentTarget !== clickedChildEle) {
     occupiedSquareCheck(param, playerOne, pushIntoPOneMememory);
     winChecker(playerOne);
-    console.log("player1ran");
   }
 };
 
@@ -154,7 +156,6 @@ const playerTwoClick = (param) => {
   if (param.currentTarget !== clickedChildEle) {
     occupiedSquareCheck(param, playerTwo, pushIntoPTwoMememory);
     winChecker(playerTwo);
-    console.log("player2ran");
   }
 };
 
@@ -171,8 +172,6 @@ const gameReset = () => {
   playerTwo.memory = [];
   gameState.roundOver = false;
   gameState.roundNotice.innerText = playerOne.name + " Starts";
-  console.log("reset click");
-  console.log(playerOne.score, playerTwo.score);
 };
 
 //Listener for game reset button
@@ -263,7 +262,6 @@ const AiLogic = () => {
         const idConvert = "#" + freeSquare.id;
         const extract = document.querySelector(idConvert);
         extract.classList.add("playerTwo");
-        console.log(freeSquare.id);
       }
       winChecker(playerTwo);
     }
@@ -291,3 +289,15 @@ const unoccupiedListforAi = () => {
 gameState.aiButton.addEventListener("click", AiToggle);
 boardContainer.addEventListener("click", unoccupiedListforAi);
 boardContainer.addEventListener("click", AiLogic);
+
+const mouseOver = (event) => {
+  event.target.textContent = gameState.currentPlayer;
+};
+
+const mouseOut = (event) => {
+  event.target.textContent = "";
+};
+
+boardContainer.addEventListener("mouseover", mouseOver);
+
+boardContainer.addEventListener("mouseout", mouseOut);

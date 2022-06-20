@@ -41,20 +41,26 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     width: max-content;
-    min-width: 500px;
+    min-width: 462px;
 }
 
 .grid {
     width: 150px;
     height: 150px;
     border: 2px solid black;
+    font-family: "odachi";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: orange;
+    font-size: 40px;
+
 }
 
 .grid:hover {
     width: 150px;
     height: 150px;
     background-color: #f5deb8;
-    opacity: 0.3;
 }
 
 /* Player Details */
