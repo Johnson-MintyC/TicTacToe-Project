@@ -243,10 +243,10 @@ const randomMove = () => {
 const AiToggle = () => {
   if (playerTwo.ai !== true) {
     playerTwo.ai = true;
-    gameState.aiButton.innerText = "A.I MODE IS ON";
+    gameState.aiButton.innerText = "A.I MODE \n ON";
   } else if (playerTwo.ai === true) {
     playerTwo.ai = false;
-    gameState.aiButton.innerText = "A.I MODE IS OFF";
+    gameState.aiButton.innerText = "A.I MODE OFF";
   }
 };
 
