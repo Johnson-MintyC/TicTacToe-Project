@@ -5,20 +5,22 @@ const arrOfSquares = document.querySelectorAll(".grid");
 const gameState = {
   winConditions: [
     //rows
-    ["1", "2", "3"],
-    ["4", "5", "6"],
-    ["7", "8", "9"],
+    ["sq1", "sq2", "sq3"],
+    ["sq4", "sq5", "sq6"],
+    ["sq7", "sq8", "sq9"],
     //columns
-    ["1", "4", "7"],
-    ["2", "5", "8"],
-    ["3", "6", "9"],
+    ["sq1", "sq4", "sq7"],
+    ["sq2", "sq5", "sq8"],
+    ["sq3", "sq6", "sq9"],
     //Diagonals
-    ["1", "5", "9"],
-    ["3", "5", "7"],
+    ["sq1", "sq5", "sq9"],
+    ["sq3", "sq5", "sq7"],
   ],
   roundOver: false,
   roundNotice: document.querySelector(".turnNotice"),
   resetButton: document.querySelector(".resetButton"),
+  unoccupiedSquares: [],
+  aiButton: document.querySelector(".aiToggle"),
 };
 
 //Player 1 Object, for data tracking and allow function reuse
@@ -40,6 +42,7 @@ const playerTwo = {
   class: "playerTwo",
   score: 0,
   memory: [],
+  ai: false,
   HTMLScoreBoard: document.querySelector("#p2Scoreboard"),
   HTMLName: document.querySelector("#p2Handle"),
   HTMLChangeNameButton: document.querySelector("#p2NameChange"),
@@ -185,11 +188,17 @@ const changePlayerName = (player) => {
 };
 
 //Listener to change Name for P1
+playerOne.HTMLName.addEventListener("click", () => {
+  changePlayerName(playerOne);
+});
 playerOne.HTMLChangeNameButton.addEventListener("click", () => {
   changePlayerName(playerOne);
 });
 
 //Listener to change Name for P2
+playerTwo.HTMLName.addEventListener("click", () => {
+  changePlayerName(playerTwo);
+});
 playerTwo.HTMLChangeNameButton.addEventListener("click", () => {
   changePlayerName(playerTwo);
 });
@@ -209,7 +218,8 @@ playerOne.HTMLpic.addEventListener("click", () => {
 playerOne.HTMLChangePicButton.addEventListener("click", () => {
   changePlayerPic(playerOne);
 });
-playerOne.HTMLpic.addEventListener("click", TurnUpdateNotice);
+//Listenerfpr P1 to change name and upate the turn notice to reflect
+playerOne.HTMLName.addEventListener("click", TurnUpdateNotice);
 playerOne.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
 
 //Listener to change Pic for P2
@@ -219,12 +229,65 @@ playerTwo.HTMLpic.addEventListener("click", () => {
 playerTwo.HTMLChangePicButton.addEventListener("click", () => {
   changePlayerPic(playerTwo);
 });
-playerTwo.HTMLpic.addEventListener("click", TurnUpdateNotice);
+//Listenerfpr P2 to change name and upate the turn notice to reflect
+playerTwo.HTMLName.addEventListener("click", TurnUpdateNotice);
 playerTwo.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
 
 // AI move generator
 const randomMove = () => {
   const move = Math.floor(Math.random() * 9);
-  console.log(move);
   return move;
 };
+
+//Toggle ai on
+const AiToggle = () => {
+  if (playerTwo.ai !== true) {
+    playerTwo.ai = true;
+    gameState.aiButton.innerText = "A.I MODE IS ON";
+  } else if (playerTwo.ai === true) {
+    playerTwo.ai = false;
+    gameState.aiButton.innerText = "A.I MODE IS OFF";
+  }
+};
+
+//Ai Turn logic
+const AiLogic = () => {
+  if (playerTwo.ai === true) {
+    if (gameState.roundOver !== true) {
+      if (playerTwo.memory.length < playerOne.memory.length) {
+        const freeSquare =
+          gameState.unoccupiedSquares[
+            Math.ceil(Math.random() * gameState.unoccupiedSquares.length - 1)
+          ];
+        playerTwo.memory.push(freeSquare.id);
+        const idConvert = "#" + freeSquare.id;
+        const extract = document.querySelector(idConvert);
+        extract.classList.add("playerTwo");
+        console.log(freeSquare.id);
+      }
+      winChecker(playerTwo);
+    }
+  }
+};
+
+// console.log(String(randomMove()));
+
+const unoccupiedListforAi = () => {
+  const result = [];
+  for (square of arrOfSquares) {
+    if (!square.classList.contains("playerOne")) {
+      if (!square.classList.contains("playerTwo")) {
+        result.push(square);
+      }
+    } else if (!square.classList.contains("playerTwo")) {
+      if (!square.classList.contains("playerOne")) {
+        result.push(square);
+      }
+    }
+  }
+  gameState.unoccupiedSquares = result;
+};
+
+gameState.aiButton.addEventListener("click", AiToggle);
+boardContainer.addEventListener("click", unoccupiedListforAi);
+boardContainer.addEventListener("click", AiLogic);

@@ -54,14 +54,14 @@
     background-size: cover;
 }
 
-.player1profile, .player2profile{
+.player1profile, .player2profile, .turnNotice{
     text-align: center;
     font-family: "haymaker";
 
 }
 
 .player1profile img, .player2profile img {
-    max-width: 300px
+    max-width: 200px
 }
 
 #p1Scoreboard, #p2Scoreboard {
