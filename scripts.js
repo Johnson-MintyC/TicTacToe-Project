@@ -275,6 +275,8 @@ const AiToggle = () => {
 //     }
 //   }
 // };
+
+//Harder AI first attempt
 //RowChecker, checks if 3rd Square
 const rowchecker = (square1, square2, square3) => {
   if (
@@ -299,14 +301,38 @@ const rowchecker = (square1, square2, square3) => {
     return false;
   }
 };
+//Go for win, if third empty
+const WinRowchecker = (square1, square2, square3) => {
+  if (
+    square1.classList.contains("playerTwo") &&
+    square2.classList.contains("playerTwo") &&
+    !square3.classList.contains("playerOne")
+  ) {
+    return square3;
+  } else if (
+    square2.classList.contains("playerTwo") &&
+    square3.classList.contains("playerTwo") &&
+    !square1.classList.contains("playerOne")
+  ) {
+    return square1;
+  } else if (
+    square1.classList.contains("playerTwo") &&
+    square3.classList.contains("playerTwo") &&
+    !square2.classList.contains("playerOne")
+  ) {
+    return square2;
+  } else {
+    return false;
+  }
+};
+
 //push square into P2 memory
 const pushintoAImemory = (square) => {
   square.classList.add("playerTwo");
   playerTwo.memory.push(square.id);
-  console.log(square.id);
 };
 
-//Harder Ai, mapped entire decision tree
+//Harder Ai, mapped entire decision tree, First Attempt
 const hardAI = () => {
   if (playerTwo.ai === true) {
     if (gameState.roundOver !== true) {
@@ -322,8 +348,49 @@ const hardAI = () => {
       if (playerOne.memory.length + playerTwo.length != 9) {
         if (playerTwo.memory.length < playerOne.memory.length) {
           let freeSquare = "";
+          //Go for wins
+          if (WinRowchecker(sq1, sq5, sq9)) {
+            freeSquare = WinRowchecker(sq1, sq5, sq9);
+            pushintoAImemory(freeSquare);
+          }
+          //Diagonal right to left
+          else if (WinRowchecker(sq3, sq5, sq7)) {
+            freeSquare = WinRowchecker(sq3, sq5, sq7);
+            pushintoAImemory(freeSquare);
+          }
+          //horizontal top row test
+          else if (WinRowchecker(sq1, sq2, sq3)) {
+            freeSquare = WinRowchecker(sq1, sq2, sq3);
+            pushintoAImemory(freeSquare);
+          }
+          //horizontal middle test
+          else if (WinRowchecker(sq4, sq5, sq6)) {
+            freeSquare = WinRowchecker(sq4, sq5, sq6);
+            pushintoAImemory(freeSquare);
+          }
+          //horizontal bottom test
+          else if (WinRowchecker(sq7, sq8, sq9)) {
+            freeSquare = WinRowchecker(sq7, sq8, sq9);
+            pushintoAImemory(freeSquare);
+          }
+          //vertical left test
+          else if (WinRowchecker(sq1, sq4, sq7)) {
+            freeSquare = WinRowchecker(sq1, sq4, sq7);
+            pushintoAImemory(freeSquare);
+          }
+          //vertical mid test
+          else if (WinRowchecker(sq2, sq5, sq8)) {
+            freeSquare = WinRowchecker(sq2, sq5, sq8);
+            pushintoAImemory(freeSquare);
+          }
+          //vertical right test
+          else if (WinRowchecker(sq3, sq6, sq9)) {
+            freeSquare = WinRowchecker(sq3, sq6, sq9);
+            pushintoAImemory(freeSquare);
+          }
+
           //Diagonal left to right
-          if (rowchecker(sq1, sq5, sq9)) {
+          else if (rowchecker(sq1, sq5, sq9)) {
             freeSquare = rowchecker(sq1, sq5, sq9);
             pushintoAImemory(freeSquare);
           }
@@ -380,6 +447,95 @@ const hardAI = () => {
     TurnUpdateNotice();
   }
 };
+
+//Harder AI Second Attempt
+// const nearWin = [
+//   //TopRowcheck
+//   ["sq1", "sq2"],
+//   ["sq2", "sq3"],
+//   ["sq1", "sq3"],
+//   //MidRowCheck
+//   ["sq4", "sq5"],
+//   ["sq5", "sq6"],
+//   ["sq4", "sq6"],
+//   //BottRowCheck
+//   ["sq7", "sq8"],
+//   ["sq8", "sq9"],
+//   ["sq7", "sq9"],
+//   //FirstCol
+//   ["sq1", "sq4"],
+//   ["sq4", "sq7"],
+//   ["sq1", "sq7"],
+//   //SecondCol
+//   ["sq2", "sq5"],
+//   ["sq5", "sq8"],
+//   ["sq2", "sq8"],
+//   //ThirdCol
+//   ["sq3", "sq6"],
+//   ["sq6", "sq9"],
+//   ["sq3", "sq9"],
+//   //DiagLeftToRight
+//   ["sq1", "sq5"],
+//   ["sq5", "sq9"],
+//   ["sq1", "sq9"],
+//   //DiagRightToLeft
+//   ["sq3", "sq5"],
+//   ["sq5", "sq7"],
+//   ["sq3", "sq7"],
+// ];
+
+// const bestMoveForAi = () => {
+//   for (near of nearWin) {
+//     let currentBestMove = "";
+//     if (near.every((element) => playerOne.memory.includes(element))) {
+//       for (criterias of gameState.winConditions) {
+//         if (near.every((element) => criterias.includes(element))) {
+//           let difference = criterias.filter((x) => !near.includes(x));
+//           const convertID = "#" + difference;
+//           const squareToTry = document.querySelector(convertID);
+//           if (!squareToTry.classList.contains("playerTwo")) {
+//             console.log(difference);
+//             currentBestMove = difference;
+//             return difference;
+//           }
+//         }
+//       }
+//     }
+//   }
+// };
+
+// const MediumAi = () => {
+//   if (playerTwo.ai === true) {
+//     if (gameState.roundOver !== true) {
+//     }
+//     if (playerTwo.memory.length < playerOne.memory.length) {
+//       if (playerOne.memory.length + playerTwo.length != 9 && bestMoveForAi()) {
+//         winChecker(playerTwo);
+//         const currentMove = bestMoveForAi();
+//         const convertID = "#" + currentMove;
+//         console.log(currentMove);
+//         const squareToTry = document.querySelector(convertID);
+//         squareToTry.classList.add("playerTwo");
+//         playerTwo.memory.push(currentMove);
+//         TurnUpdateNotice();
+//         winChecker(playerTwo);
+//       } else if (playerOne.memory.length + playerTwo.length != 9) {
+//         winChecker(playerTwo);
+//         freeSquare =
+//           gameState.unoccupiedSquares[
+//             Math.ceil(Math.random() * gameState.unoccupiedSquares.length - 1)
+//           ];
+//         playerTwo.memory.push(freeSquare.id);
+//         const idConvert = "#" + freeSquare.id;
+//         const extract = document.querySelector(idConvert);
+//         extract.classList.add("playerTwo");
+//         TurnUpdateNotice();
+//         winChecker(playerTwo);
+//       }
+//     }
+//   }
+// };
+
 //Return array of squares with no P1 or P2 class, therefore unoccupied
 const unoccupiedListforAi = () => {
   const result = [];
