@@ -42,6 +42,7 @@ body {
     justify-content: center;
     width: max-content;
     min-width: 462px;
+    max-width: 462px;
 }
 
 .grid {
@@ -55,6 +56,9 @@ body {
     color: orange;
     font-size: 40px;
 
+}
+.row {
+    display: flex;
 }
 
 .grid:hover {
