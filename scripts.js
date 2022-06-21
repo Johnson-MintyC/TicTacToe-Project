@@ -12,6 +12,7 @@ const playerOne = {
   HTMLChangeNameButton: document.querySelector("#p1NameChange"),
   HTMLpic: document.querySelector("#p1pic"),
   HTMLChangePicButton: document.querySelector("#p1PicChange"),
+  Audio: new Audio("./Assets/Dealing-playing-cards.mp3"),
 };
 
 //Player 2 Object, for data tracking and allow function reuse
@@ -26,6 +27,7 @@ const playerTwo = {
   HTMLChangeNameButton: document.querySelector("#p2NameChange"),
   HTMLpic: document.querySelector("#p2pic"),
   HTMLChangePicButton: document.querySelector("#p2PicChange"),
+  Audio: new Audio("./Assets/Dealing-playing-cards-2.mp3"),
 };
 
 //game state of shared variables
@@ -49,6 +51,9 @@ const gameState = {
   resetButton: document.querySelector(".resetButton"),
   unoccupiedSquares: [],
   aiButton: document.querySelector(".aiToggle"),
+  resetAudio: new Audio("./Assets/Wear-armor.mp3"),
+  AiUP: new Audio("./Assets/Hi-tech-button-click-interface.mp3"),
+  AiDown: new Audio("./Assets/Button-click-error.mp3"),
 };
 
 //Use to check board state class assignment working, Debugging purposes
@@ -57,7 +62,7 @@ const boardStateCheck = () => {
   return console.log(boardState);
 };
 
-//Track and check whos turn it is
+//Track, check and alternate whos turn it is
 const TurnCheck = (param) => {
   if (gameState.roundOver !== true) {
     if (playerOne.memory.length === 0) {
@@ -147,6 +152,7 @@ const playerOneClick = (param) => {
   if (param.currentTarget !== clickedChildEle) {
     occupiedSquareCheck(param, playerOne, pushIntoPOneMememory);
     winChecker(playerOne);
+    playerOne.Audio.play();
   }
 };
 
@@ -156,9 +162,11 @@ const playerTwoClick = (param) => {
   if (param.currentTarget !== clickedChildEle) {
     occupiedSquareCheck(param, playerTwo, pushIntoPTwoMememory);
     winChecker(playerTwo);
+    playerTwo.Audio.play();
   }
 };
 
+//Listener for grid for base game functionality, and update the botice
 boardContainer.addEventListener("click", TurnCheck);
 boardContainer.addEventListener("click", TurnUpdateNotice);
 
@@ -172,12 +180,13 @@ const gameReset = () => {
   playerTwo.memory = [];
   gameState.roundOver = false;
   gameState.roundNotice.innerText = playerOne.name + " Starts";
+  gameState.resetAudio.play();
 };
 
 //Listener for game reset button
 gameState.resetButton.addEventListener("click", gameReset);
 
-//Change Name after valid input
+//Change Name if valid input
 const changePlayerName = (player) => {
   const playerInput = prompt("Enter name: ");
   if (playerInput) {
@@ -217,7 +226,7 @@ playerOne.HTMLpic.addEventListener("click", () => {
 playerOne.HTMLChangePicButton.addEventListener("click", () => {
   changePlayerPic(playerOne);
 });
-//Listenerfpr P1 to change name and upate the turn notice to reflect
+//Listener for P1 to change name and upate the turn notice to reflect
 playerOne.HTMLName.addEventListener("click", TurnUpdateNotice);
 playerOne.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
 
@@ -228,24 +237,20 @@ playerTwo.HTMLpic.addEventListener("click", () => {
 playerTwo.HTMLChangePicButton.addEventListener("click", () => {
   changePlayerPic(playerTwo);
 });
-//Listenerfpr P2 to change name and upate the turn notice to reflect
+//Listener for P2 to change name and upate the turn notice to reflect
 playerTwo.HTMLName.addEventListener("click", TurnUpdateNotice);
 playerTwo.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
-
-// AI move generator
-const randomMove = () => {
-  const move = Math.floor(Math.random() * 9);
-  return move;
-};
 
 //Toggle ai on
 const AiToggle = () => {
   if (playerTwo.ai !== true) {
     playerTwo.ai = true;
     gameState.aiButton.innerText = "A.I MODE \n ON";
+    gameState.AiUP.play();
   } else if (playerTwo.ai === true) {
     playerTwo.ai = false;
     gameState.aiButton.innerText = "A.I MODE OFF";
+    gameState.AiDown.play();
   }
 };
 
@@ -286,9 +291,11 @@ const unoccupiedListforAi = () => {
   gameState.unoccupiedSquares = result;
 };
 
-//Listeners to switch AI on, and run once AI is true
+//Listeners to switch AI on/off, and run once AI is true
 gameState.aiButton.addEventListener("click", AiToggle);
+//First update list of latest unoccupied squares
 boardContainer.addEventListener("click", unoccupiedListforAi);
+//Then run AI to pick from latest
 boardContainer.addEventListener("click", AiLogic);
 
 //Mouse over function to add text to empty divs
@@ -304,3 +311,8 @@ const mouseOut = (event) => {
 //Listener for for mouse on and exit
 boardContainer.addEventListener("mouseover", mouseOver);
 boardContainer.addEventListener("mouseout", mouseOut);
+
+//Hard Ai
+// const minimax = (currentBoard, player) => {
+//     if ()
+// };

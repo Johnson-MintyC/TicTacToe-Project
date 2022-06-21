@@ -47,7 +47,7 @@ body {
 .grid {
     width: 150px;
     height: 150px;
-    border: 2px solid black;
+    border: 2px solid rgba(250, 235, 215, 0.2);
     font-family: "odachi";
     display: flex;
     justify-content: center;
