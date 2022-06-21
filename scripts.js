@@ -275,8 +275,38 @@ const AiToggle = () => {
 //     }
 //   }
 // };
+//RowChecker, checks if 3rd Square
+const rowchecker = (square1, square2, square3) => {
+  if (
+    square1.classList.contains("playerOne") &&
+    square2.classList.contains("playerOne") &&
+    !square3.classList.contains("playerTwo")
+  ) {
+    return square3;
+  } else if (
+    square2.classList.contains("playerOne") &&
+    square3.classList.contains("playerOne") &&
+    !square1.classList.contains("playerTwo")
+  ) {
+    return square1;
+  } else if (
+    square1.classList.contains("playerOne") &&
+    square3.classList.contains("playerOne") &&
+    !square2.classList.contains("playerTwo")
+  ) {
+    return square2;
+  } else {
+    return false;
+  }
+};
+//push square into P2 memory
+const pushintoAImemory = (square) => {
+  square.classList.add("playerTwo");
+  playerTwo.memory.push(square.id);
+  console.log(square.id);
+};
 
-//Harder Ai
+//Harder Ai, mapped entire decision tree
 const hardAI = () => {
   if (playerTwo.ai === true) {
     if (gameState.roundOver !== true) {
@@ -289,102 +319,67 @@ const hardAI = () => {
       const sq7 = document.querySelector("#sq7");
       const sq8 = document.querySelector("#sq8");
       const sq9 = document.querySelector("#sq9");
-      if (playerTwo.memory.length < playerOne.memory.length) {
-        console.log("running");
-        boardStateCheck();
-        //horizontal top row test
-        if (
-          sq1.classList.contains("playerOne") &&
-          sq2.classList.contains("playerOne") &&
-          !sq3.classList.contains("playerTwo")
-        ) {
-          sq3.classList.add("playerTwo");
-          playerTwo.memory.push("sq3");
-          console.log("check works");
-        } else if (
-          sq2.classList.contains("playerOne") &&
-          sq3.classList.contains("playerOne") &&
-          !sq1.classList.contains("playerTwo")
-        ) {
-          sq1.classList.add("playerTwo");
-          playerTwo.memory.push("sq1");
-        } else if (
-          sq1.classList.contains("playerOne") &&
-          sq3.classList.contains("playerOne") &&
-          !sq2.classList.contains("playerTwo")
-        ) {
-          sq2.classList.add("playerTwo");
-          playerTwo.memory.push("sq2");
-        } else if (
-          sq1.classList.contains("playerOne") &&
-          sq2.classList.contains("playerOne") &&
-          !sq3.classList.contains("playerTwo")
-        ) {
-          sq3.classList.add("playerTwo");
-          playerTwo.memory.push("sq3");
-        } else if (
-          sq2.classList.contains("playerOne") &&
-          sq3.classList.contains("playerOne") &&
-          !sq1.classList.contains("playerTwo")
-        ) {
-          sq1.classList.add("playerTwo");
-          playerTwo.memory.push("sq1");
-        } else if (
-          sq1.classList.contains("playerOne") &&
-          sq3.classList.contains("playerOne") &&
-          !sq2.classList.contains("playerTwo")
-        ) {
-          sq2.classList.add("playerTwo");
-          playerTwo.memory.push("sq2");
-        }
-        //horizontal middle test
-        else if (
-          sq4.classList.contains("playerOne") &&
-          sq5.classList.contains("playerOne") &&
-          !sq6.classList.contains("playerTwo")
-        ) {
-          sq6.classList.add("playerTwo");
-          playerTwo.memory.push("sq6");
-        } else if (
-          sq5.classList.contains("playerOne") &&
-          sq6.classList.contains("playerOne") &&
-          !sq4.classList.contains("playerTwo")
-        ) {
-          sq4.classList.add("playerTwo");
-          playerTwo.memory.push("sq4");
-        } else if (
-          sq4.classList.contains("playerOne") &&
-          sq6.classList.contains("playerOne") &&
-          !sq5.classList.contains("playerTwo")
-        ) {
-          sq5.classList.add("playerTwo");
-          playerTwo.memory.push("sq5");
-        }
-        //horizontal bottom test
-
-        //vertical left test
-        else if (
-          sq1.classList.contains("playerOne") &&
-          sq3.classList.contains("playerOne") &&
-          !sq2.classList.contains("playerTwo")
-        ) {
-          sq2.classList.add("playerTwo");
-          playerTwo.memory.push("sq2");
-        } else {
-          const freeSquare =
-            gameState.unoccupiedSquares[
-              Math.ceil(Math.random() * gameState.unoccupiedSquares.length - 1)
-            ];
-          playerTwo.memory.push(freeSquare.id);
-          const idConvert = "#" + freeSquare.id;
-          const extract = document.querySelector(idConvert);
-          extract.classList.add("playerTwo");
+      if (playerOne.memory.length + playerTwo.length != 9) {
+        if (playerTwo.memory.length < playerOne.memory.length) {
+          let freeSquare = "";
+          //Diagonal left to right
+          if (rowchecker(sq1, sq5, sq9)) {
+            freeSquare = rowchecker(sq1, sq5, sq9);
+            pushintoAImemory(freeSquare);
+          }
+          //Diagonal right to left
+          else if (rowchecker(sq3, sq5, sq7)) {
+            freeSquare = rowchecker(sq3, sq5, sq7);
+            pushintoAImemory(freeSquare);
+          }
+          //horizontal top row test
+          else if (rowchecker(sq1, sq2, sq3)) {
+            freeSquare = rowchecker(sq1, sq2, sq3);
+            pushintoAImemory(freeSquare);
+          }
+          //horizontal middle test
+          else if (rowchecker(sq4, sq5, sq6)) {
+            freeSquare = rowchecker(sq4, sq5, sq6);
+            pushintoAImemory(freeSquare);
+          }
+          //horizontal bottom test
+          else if (rowchecker(sq7, sq8, sq9)) {
+            freeSquare = rowchecker(sq7, sq8, sq9);
+            pushintoAImemory(freeSquare);
+          }
+          //vertical left test
+          else if (rowchecker(sq1, sq4, sq7)) {
+            freeSquare = rowchecker(sq1, sq4, sq7);
+            pushintoAImemory(freeSquare);
+          }
+          //vertical mid test
+          else if (rowchecker(sq2, sq5, sq8)) {
+            freeSquare = rowchecker(sq2, sq5, sq8);
+            pushintoAImemory(freeSquare);
+          }
+          //vertical right test
+          else if (rowchecker(sq3, sq6, sq9)) {
+            freeSquare = rowchecker(sq3, sq6, sq9);
+            pushintoAImemory(freeSquare);
+          } else if (gameState.unoccupiedSquares.length != 0) {
+            freeSquare =
+              gameState.unoccupiedSquares[
+                Math.ceil(
+                  Math.random() * gameState.unoccupiedSquares.length - 1
+                )
+              ];
+            playerTwo.memory.push(freeSquare.id);
+            const idConvert = "#" + freeSquare.id;
+            const extract = document.querySelector(idConvert);
+            extract.classList.add("playerTwo");
+          }
         }
       }
     }
+    winChecker(playerTwo);
+    TurnUpdateNotice();
   }
 };
-
 //Return array of squares with no P1 or P2 class, therefore unoccupied
 const unoccupiedListforAi = () => {
   const result = [];
@@ -422,37 +417,3 @@ const mouseOut = (event) => {
 //Listener for for mouse on and exit
 boardContainer.addEventListener("mouseover", mouseOver);
 boardContainer.addEventListener("mouseout", mouseOut);
-
-//Hard Ai
-// const hardAI = () => {
-//   const sq1 = document.querySelector("#sq1");
-//   const sq2 = document.querySelector("#sq2");
-//   const sq3 = document.querySelector("#sq3");
-//   const sq4 = document.querySelector("#sq4");
-//   const sq5 = document.querySelector("#sq5");
-//   const sq6 = document.querySelector("#sq6");
-//   const sq7 = document.querySelector("#sq7");
-//   const sq8 = document.querySelector("#sq8");
-//   const sq9 = document.querySelector("#sq9");
-//   for (square of arrOfSquares) {
-//     if (
-//       sq1.classList.contains("playerOne") &&
-//       sq2.classList.contains("playerOne" && !sq3.classList("playerTwo"))
-//     ) {
-//       sq3.classList.add("playerTwo");
-//       playerTwo.memory.push("sq3");
-//     } else if (
-//       sq2.classList.contains("playerOne") &&
-//       sq3.classList.contains("playerOne" && !sq1.classList("playerTwo"))
-//     ) {
-//       sq1.classList.add("playerTwo");
-//       playerTwo.memory.push("sq1");
-//     } else if (
-//       sq1.classList.contains("playerOne") &&
-//       sq3.classList.contains("playerOne" && !sq2.classList("playerTwo"))
-//     ) {
-//       sq2.classList.add("playerTwo");
-//       playerTwo.memory.push("sq2");
-//     }
-//   }
-// };
