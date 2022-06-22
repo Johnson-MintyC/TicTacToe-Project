@@ -44,3 +44,42 @@ The AI will actively go for _Wins_ when presented, _Block_ the player if they ar
 ![Screenshot4](./Screenshots/Screen%20Shot%202022-06-22%20at%205.38.06%20PM.png)
 ![Screenshot5](./Screenshots/Screen%20Shot%202022-06-22%20at%205.39.17%20PM.png)
 ![Screenshot3](./Screenshots/Screen%20Shot%202022-06-22%20at%205.38.31%20PM.png)
+
+## Future Additions
+
+- Change icons possibly
+- Adjustable Grid Size
+
+## Bug and Solution
+
+- Original win check involved joining the players array into a string and doing the same with win condition and seeing if includes returned true
+- Below is how it worked originally, minus bits for visibility
+
+```js
+const winChecker = (player, playerName) => {
+  for (const criterias of gameState.winConditions) {
+    let sCondition = condition.join("");
+    let pMemoryString = player.memory
+      .sort((a, z) => {
+        return a - z;
+      })
+      .join("");
+    console.log(pMemoryString);
+    if (pMemoryString.includes(sCondition)) {
+      alert(playerName + " Wins!");
+      if (player.memory.length === 5) {
+        console.log("Its a Draw");
+        break;
+      } else if (pMemoryString.includes(sCondition)) {
+        alert(player.name + " Wins!");
+      }
+    }
+  }
+};
+```
+
+- This worked for most situations, except diagonals broke in long games, e.g turn 4 or greater
+- As player memory will now be for example squares [1,2,5,9] and squares [1,5,9] will now no longer evaluate to win
+- Solution was looking for a way to test for subsets and supersets, which isn't built into Javascript
+- This now does it by checking if every element of win e.g [1,2,3] is included in player.memory via win.every((elemOfwin) => player.memory.includes(elemOfwin))
+- This will check if win is a subset of the players memory superset, with the evaluation being true if all 3 of win is included
