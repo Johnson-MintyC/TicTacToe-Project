@@ -196,7 +196,14 @@ gameState.resetButton.addEventListener("click", gameReset);
 //Change Name if valid input
 const changePlayerName = (player) => {
   const playerInput = prompt("Enter name: ");
-  if (playerInput) {
+  if (playerInput === "Robot") {
+    playerTwo.HTMLName.innerText = playerInput;
+    playerTwo.name = playerInput;
+    playerTwo.HTMLpic.src =
+      "https://images.unsplash.com/photo-1535378620166-273708d44e4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=957&q=80";
+    playerTwo.ai = true;
+    gameState.aiButton.innerHTML = "Robot has\n hijacked";
+  } else if (playerInput) {
     player.name = playerInput;
     player.HTMLName.innerText = playerInput;
   }
