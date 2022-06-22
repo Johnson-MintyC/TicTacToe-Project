@@ -173,7 +173,7 @@ const playerTwoClick = (param) => {
   }
 };
 
-//Listener for grid for base game functionality, and update the botice
+//Listener for grid for base game functionality, and update the notice board
 boardContainer.addEventListener("click", TurnCheck);
 boardContainer.addEventListener("click", TurnUpdateNotice);
 
@@ -196,7 +196,8 @@ gameState.resetButton.addEventListener("click", gameReset);
 //Change Name if valid input
 const changePlayerName = (player) => {
   const playerInput = prompt("Enter name: ");
-  if (playerInput === "Robot") {
+  //Easter Egg to switch AI on via name
+  if (playerInput === "Glitchy") {
     playerTwo.HTMLName.innerText = playerInput;
     playerTwo.name = playerInput;
     playerTwo.HTMLpic.src =
@@ -209,7 +210,7 @@ const changePlayerName = (player) => {
   }
 };
 
-//Listener to change Name for P1
+//Listener to change Name for P1 Button & clicking on name
 playerOne.HTMLName.addEventListener("click", () => {
   changePlayerName(playerOne);
 });
@@ -217,7 +218,7 @@ playerOne.HTMLChangeNameButton.addEventListener("click", () => {
   changePlayerName(playerOne);
 });
 
-//Listener to change Name for P2
+//Listener to change Name for P2 Button & clicking on name
 playerTwo.HTMLName.addEventListener("click", () => {
   changePlayerName(playerTwo);
 });
@@ -225,7 +226,7 @@ playerTwo.HTMLChangeNameButton.addEventListener("click", () => {
   changePlayerName(playerTwo);
 });
 
-//change player profile pic
+//actions to change player profile pic
 const changePlayerPic = (player) => {
   const playerInput = prompt("Enter Image URL: ");
   if (playerInput) {
@@ -233,7 +234,7 @@ const changePlayerPic = (player) => {
   }
 };
 
-//Listener to change Pic for P1
+//Listener to change Pic for P1 Button & profile pic
 playerOne.HTMLpic.addEventListener("click", () => {
   changePlayerPic(playerOne);
 });
@@ -244,7 +245,7 @@ playerOne.HTMLChangePicButton.addEventListener("click", () => {
 playerOne.HTMLName.addEventListener("click", TurnUpdateNotice);
 playerOne.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
 
-//Listener to change Pic for P2
+//Listener to change Pic for P2 Button & profile pic
 playerTwo.HTMLpic.addEventListener("click", () => {
   changePlayerPic(playerTwo);
 });
@@ -255,7 +256,7 @@ playerTwo.HTMLChangePicButton.addEventListener("click", () => {
 playerTwo.HTMLName.addEventListener("click", TurnUpdateNotice);
 playerTwo.HTMLChangeNameButton.addEventListener("click", TurnUpdateNotice);
 
-//Toggle ai on
+//Toggle ai on/off
 const AiToggle = () => {
   if (playerTwo.ai !== true) {
     playerTwo.ai = true;
@@ -338,7 +339,7 @@ const pushintoAImemory = (square) => {
   playerTwo.memory.push(square.id);
 };
 
-//Harder Ai, mapped entire decision tree, First Attempt
+//Harder Ai, makes decision bases on priority of either win first, block if can't, pick random if none of the other is available
 const hardAI = () => {
   if (playerTwo.ai === true) {
     if (gameState.roundOver !== true) {
@@ -393,19 +394,19 @@ const unoccupiedListforAi = () => {
 gameState.aiButton.addEventListener("click", AiToggle);
 //First update list of latest unoccupied squares
 boardContainer.addEventListener("click", unoccupiedListforAi);
-//Then run AI to pick from latest
+//Then run AI, should run with latest info and after player actions
 boardContainer.addEventListener("click", hardAI); //Ailogic check
 
-//Mouse over function to add text to empty divs
+//Actions to add text to empty divs on mouse on
 const mouseOver = (event) => {
   event.target.textContent = gameState.currentPlayer;
 };
 
-//Remove the text on mouse exit
+//Actions to Remove the text on mouse exit
 const mouseOut = (event) => {
   event.target.textContent = "";
 };
 
-//Listener for for mouse on and exit
+//Listener for mouse on and exit to do add/remove text
 boardContainer.addEventListener("mouseover", mouseOver);
 boardContainer.addEventListener("mouseout", mouseOut);
