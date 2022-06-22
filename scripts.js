@@ -54,6 +54,10 @@ const gameState = {
   resetAudio: new Audio("./Assets/Wear-armor.mp3"),
   AiUP: new Audio("./Assets/Hi-tech-button-click-interface.mp3"),
   AiDown: new Audio("./Assets/Button-click-error.mp3"),
+  SoundWin: new Audio("./Assets/yay-6326.mp3"),
+  SoundDraw: new Audio(
+    "./Assets/no-luck-too-bad-disappointing-sound-effect-112943.mp3"
+  ),
 };
 
 //Use to check board state class assignment working, Debugging purposes
@@ -101,6 +105,7 @@ const TurnUpdateNotice = () => {
     }
   }
 };
+
 // Check if square has one of the classes added and refuse
 const occupiedSquareCheck = (event, player, whoMemory) => {
   if (
@@ -135,6 +140,7 @@ const winChecker = (player) => {
       gameState.roundNotice.innerText = player.name + " Wins!";
       increaseScore(player);
       gameState.roundOver = true;
+      gameState.SoundWin.play();
     }
   }
   if (
@@ -143,6 +149,7 @@ const winChecker = (player) => {
     gameState.roundOver === false
   ) {
     gameState.roundNotice.innerText = "Its a Draw";
+    gameState.SoundDraw.play();
   }
 };
 
@@ -254,30 +261,7 @@ const AiToggle = () => {
   }
 };
 
-// Ai Turn logic, pick randomly from array of unoccupied squares
-// const AiLogic = () => {
-//   if (playerTwo.ai === true) {
-//     if (gameState.roundOver !== true) {
-//       if (playerTwo.memory.length < playerOne.memory.length) {
-//         if (playerOne.memory.length + playerTwo.length != 9) {
-//           const freeSquare =
-//             gameState.unoccupiedSquares[
-//               Math.ceil(Math.random() * gameState.unoccupiedSquares.length - 1)
-//             ];
-//           playerTwo.memory.push(freeSquare.id);
-//           const idConvert = "#" + freeSquare.id;
-//           const extract = document.querySelector(idConvert);
-//           extract.classList.add("playerTwo");
-//         }
-//         winChecker(playerTwo);
-//         TurnUpdateNotice();
-//       }
-//     }
-//   }
-// };
-
 //Harder AI cleaned up
-
 //Row Checker that loops through, using wining combo as relationships to check
 const RowCheckerV2 = () => {
   for (criterias of gameState.winConditions) {
@@ -292,27 +276,25 @@ const RowCheckerV2 = () => {
       square2.classList.contains("playerOne") &&
       !square3.classList.contains("playerTwo")
     ) {
-      console.log(square3);
       return square3;
     } else if (
       square2.classList.contains("playerOne") &&
       square3.classList.contains("playerOne") &&
       !square1.classList.contains("playerTwo")
     ) {
-      console.log(square1);
       return square1;
     } else if (
       square1.classList.contains("playerOne") &&
       square3.classList.contains("playerOne") &&
       !square2.classList.contains("playerTwo")
     ) {
-      console.log(square2);
       return square2;
     }
   }
 };
 
 //WinRowCheckerV2
+//Checks if P2 occupies 2/3 squares of and the 3rd is free
 const WinRowCheckerV2 = () => {
   for (criterias of gameState.winConditions) {
     let critID1 = "#" + criterias[0];
