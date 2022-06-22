@@ -13,7 +13,7 @@ This web tic tac toe game uses the following
 
 ## Brief
 
-Using this [brief](https://git.generalassemb.ly/seir59anz/seir59anz-course-materials/tree/main/unit1/project).
+Using this as a [brief](https://git.generalassemb.ly/seir59anz/seir59anz-course-materials/tree/main/unit1/project).
 Create a web game as my first solo project for the General Assembly Software Engineering bootcamp
 
 ## Functionality
@@ -23,19 +23,24 @@ Tic Tac Toe is a game where one player representing X and another player represe
 For my implementation of the game, it features the following:
 
 1. Takes turns with your friend, placing markers on the board
-1. Customize Player Name
-1. Customize Player Profile Picture
+1. **Customize** Player **Name**
+1. **Customize** Player Profile **Picture**
 1. Scoreboards that keep track of win totals across mutliple games
-1. A turn notice that displays the current players turn
-1. Hovering over the squares displays the current players turn
+1. A **turn notice** that displays the current players turn
+1. **Hovering** over the squares displays the current players turn
 1. Sounds for wins and actions
-1. Play against a AI, he's pretty good at tic tac toe
+1. **Play against a AI**, it's _pretty good_ at tic tac toe
 1. Added small Easter Egg
 
 ## How the AI Works
 
-The AI will actively go for wins when presented, Block the player if they are close to winning and choose a square when none of those are available.
+The AI will actively go for _Wins_ when presented, _Block_ the player if they are close to winning and _choose a square_ when none of those are available.
 
-## Screenshoots
+## Screenshots
 
-![Alt Text](https://imgur.com/c88e6cb2-19ca-4d7e-ba69-0855613256ff)
+![Screenshot1](./Screenshots/Screen%20Shot%202022-06-22%20at%201.44.46%20PM.png)
+![Screenshot2](./Screenshots/Screen%20Shot%202022-06-22%20at%205.10.29%20PM.png)
+![Screenshot3](./Screenshots/Screen%20Shot%202022-06-22%20at%205.11.05%20PM.png)
+![Screenshot4](./Screenshots/Screen%20Shot%202022-06-22%20at%205.38.06%20PM.png)
+![Screenshot5](./Screenshots/Screen%20Shot%202022-06-22%20at%205.39.17%20PM.png)
+![Screenshot3](./Screenshots/Screen%20Shot%202022-06-22%20at%205.38.31%20PM.png)
