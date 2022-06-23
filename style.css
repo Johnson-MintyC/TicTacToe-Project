@@ -87,9 +87,8 @@ body {
 }
 
 .player1profile img, .player2profile img {
-    max-height: 200px;
-    max-width: 300px;
-    object-fit: contain
+    max-width: 200px;
+    object-fit: cover
 }
 
 #p1Scoreboard, #p2Scoreboard {
