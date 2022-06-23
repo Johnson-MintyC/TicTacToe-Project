@@ -22,11 +22,11 @@ Tic Tac Toe is a game where one player representing X and another player represe
 
 For my implementation of the game, it features the following:
 
-1. Takes turns with your friend, placing markers on the board
+1. Take turns with your friend, placing markers on the board
 1. **Customize** Player **Name**
 1. **Customize** Player Profile **Picture**
-1. Scoreboards that keep track of win totals across mutliple games
-1. A **turn notice** that displays the current players turn
+1. Scoreboards that keep track of win totals across multiple games
+1. A **Turn Notice** that displays the current players turn
 1. **Hovering** over the squares displays the current players turn
 1. Sounds for wins and actions
 1. **Play against a AI**, it's _pretty good_ at tic tac toe
@@ -34,7 +34,7 @@ For my implementation of the game, it features the following:
 
 ## How the AI Works
 
-The AI will actively go for _Wins_ when presented, _Block_ the player if they are close to winning and _choose a square_ when none of those are available.
+The AI will currently actively go for _Wins_ when presented, _Block_ the player if they are close to winning and _choose a square_ when none of those are available.
 
 ## Screenshots
 
@@ -78,8 +78,8 @@ const winChecker = (player, playerName) => {
 };
 ```
 
-- This worked for most situations, except diagonals broke in long games, e.g turn 4 or greater
+- This worked for most situations, except diagonals broke in long games, i.e turn 4 or greater
 - As player memory will now be for example squares [1,2,5,9] and squares [1,5,9] will now no longer evaluate to win
-- Solution was looking for a way to test for subsets and supersets, which isn't built into Javascript
+- Solution was looking for a actual way to test for subsets and supersets, which isn't natively built into Javascript
 - This now does it by checking if every element of win e.g [1,2,3] is included in player.memory via win.every((elemOfwin) => player.memory.includes(elemOfwin))
-- This will check if win is a subset of the players memory superset, with the evaluation being true if all 3 of win is included
+- This will check if all elements of win is a subset of the player memories superset, with the evaluation being true if all 3 of win is included
