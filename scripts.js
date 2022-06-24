@@ -62,8 +62,7 @@ const gameState = {
 
 //Use to check board state class assignment working, Debugging purposes
 const boardStateCheck = () => {
-  const boardState = arrOfSquares;
-  return console.log(boardState);
+  return console.log(arrOfSquares);
 };
 
 //Track, check and alternate whos turn it is
@@ -81,7 +80,7 @@ const TurnCheck = (param) => {
   }
 };
 
-//Update turn notice
+//Update turn notice in the middle with current players turn
 const TurnUpdateNotice = () => {
   if (
     playerOne.memory.length === 5 &&
@@ -106,7 +105,7 @@ const TurnUpdateNotice = () => {
   }
 };
 
-// Check if square has one of the classes added and refuse
+// Check if square has one of the classes added and refuse, making turn not alternate if occupied
 const occupiedSquareCheck = (event, player, whoMemory) => {
   if (
     !event.target.classList.contains("playerOne") &&
@@ -193,7 +192,7 @@ const gameReset = () => {
 //Listener for game reset button
 gameState.resetButton.addEventListener("click", gameReset);
 
-//Change Name if valid input
+//Change Name if truthy valid input
 const changePlayerName = (player) => {
   const playerInput = prompt("Enter name: ");
   //Easter Egg to switch AI on via name
@@ -226,7 +225,7 @@ playerTwo.HTMLChangeNameButton.addEventListener("click", () => {
   changePlayerName(playerTwo);
 });
 
-//actions to change player profile pic
+//Acepts URL and change player profile pic source
 const changePlayerPic = (player) => {
   const playerInput = prompt("Enter Image URL: ");
   if (playerInput) {
@@ -333,7 +332,7 @@ const WinRowCheckerV2 = () => {
   }
 };
 
-//push square into P2 memory
+//push square into P2 memory while ai mode is active
 const pushintoAImemory = (square) => {
   square.classList.add("playerTwo");
   playerTwo.memory.push(square.id);
