@@ -7,6 +7,7 @@
     font-family: "haymaker";
     src: url(./Webfont/Haymaker.woff);
 }
+
 /* Full Page */
 
 body {
@@ -192,5 +193,51 @@ button, button::after {
     100% {
       clip-path: var(--slice-1);
       transform: translate(0);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .heading {
+      margin-bottom: 0;
+    }
+    .turnNotice {
+      margin: 0;
+    }
+    .midbody {
+      display: grid;
+    }
+    .boardcontainer {
+      min-width: 333px;
+      max-width: 333px;
+    }
+    .grid {
+      width: 111px;
+      height: 111px;
+    }
+    .player1profile {
+      grid-row-start: 2;
+      grid-column-start: 1
+    }
+    .player1profile img, .player2profile img {
+    max-width: 100px;
+    max-height: 100px;
+    overflow: hidden;
+    }
+    .lowerbody {
+      position: absolute;
+      top: 0;
+    }
+    .lowerbody button {
+    margin: 5px 30px;
+    }
+    #p1Scoreboard, #p2Scoreboard {
+      font-size: 20px;
+    }
+    #p2NameChange, #p2PicChange, #p1NameChange, #p1PicChange {
+      display: none;
+    }
+    button, button::after {
+      width: 100px;
+      height: 46px;
     }
   }
