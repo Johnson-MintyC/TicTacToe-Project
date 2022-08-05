@@ -13,7 +13,7 @@ This web tic tac toe game uses the following
 
 ## Brief
 
-Using this as a [brief](https://git.generalassemb.ly/seir59anz/seir59anz-course-materials/tree/main/unit1/project).
+Using this as a [brief](brief.md).
 Create a web game as my first solo project for the General Assembly Software Engineering bootcamp
 
 ## Functionality
